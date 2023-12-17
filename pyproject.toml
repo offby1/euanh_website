@@ -8,6 +8,12 @@ packages = [{include = "euanh_website"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+fastapi = "^0.105.0"
+pytailwindcss = "^0.2.0"
+pydantic = "^2.5.2"
+sqlalchemy = "^2.0.23"
+sqladmin = {extras = ["full"], version = "^0.16.0"}
+uvicorn = "^0.24.0.post1"
 
 
 [build-system]
