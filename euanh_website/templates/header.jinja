@@ -1,11 +1,18 @@
 {# header.html #}
 
 <header class="bg-white shadow">
-    <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-        <img src="/static/images/logo.png" alt="{{ config.site_name }}" class="w-16 h-16">
-        <a href="/" class="font-semibold text-xl tracking-tight text-gray-800">{{ config.site_name }}</a>
-        <div class="lg:block font-riffic">
-            <ul class="inline-flex items-center">
+    <nav class="container px-2 py-3 flex justify-between items-center">
+        <!-- Left-aligned logo and site name -->
+        <div class="flex items-center">
+            <a href="/" class="flex items-center">
+                <img src="/static/images/logo.png" alt="{{ config.site_name }}" class="w-32 h-32" />
+                <span class="font-semibold text-xl tracking-tight text-gray-800">{{ config.site_name }}</span>
+            </a>
+        </div>
+
+        <!-- Centered navigation list -->
+        <div class="flex-grow font-riffic">
+            <ul class="flex justify-center items-center">
                 <li><a href="#features" class="px-4 py-2 text-header_green hover:text-header_green_hover">Features</a></li>
                 <li><a href="#pricing" class="px-4 py-2 text-header_green hover:text-header_green_hover">Pricing</a></li>
                 <li><a href="#blog" class="px-4 py-2 text-header_green hover:text-header_green_hover">Blog</a></li>
@@ -15,3 +22,4 @@
         </div>
     </nav>
 </header>
+
