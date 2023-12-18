@@ -3,8 +3,8 @@ from datetime import datetime, timedelta, timezone
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
-from euanh_website.models.Base import CommonBase
-from euanh_website.models.User import User
+from euanh_website.models.base import CommonBase
+from euanh_website.models.user import User
 
 
 class UserToken(CommonBase):

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
-from euanh_website.models.Base import CommonBase
+from euanh_website.models.base import CommonBase
 
 
 class BlogPost(CommonBase):

@@ -2,7 +2,7 @@ import bcrypt
 from sqlalchemy import Boolean, Column, Integer, String
 from sqlalchemy.orm import relationship
 
-from euanh_website.models.Base import CommonBase
+from euanh_website.models.base import CommonBase
 
 
 class User(CommonBase):
