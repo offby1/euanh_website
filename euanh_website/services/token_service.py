@@ -33,3 +33,10 @@ class TokenService:
             session.add(user_token)
             session.commit()
             return token
+
+    def delete_token(self):
+        with Session() as session:
+            token = session.query(UserToken).filter_by(token=self.token).first()
+            session.delete(token)
+            session.commit()
+            return True

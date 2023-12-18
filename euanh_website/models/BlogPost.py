@@ -1,6 +1,3 @@
-from datetime import datetime
-
-from sqladmin import ModelView
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
@@ -23,18 +20,3 @@ class BlogPost(CommonBase):
 
     def __str__(self):
         return self.title
-
-
-class BlogPostView(ModelView, model=BlogPost):
-    column_list = [
-        BlogPost.id,
-        BlogPost.title,
-        BlogPost.preview,
-        BlogPost.author,
-        BlogPost.created_on,
-        BlogPost.updated_on,
-    ]
-
-    form_excluded_columns = ["created_on", "updated_on"]
-
-    column_default_sort = ("created_on", True)
