@@ -56,7 +56,7 @@ class UserView(ModelView, model=User):
 
     def on_model_change(
         self, form: Form, model: Any, is_created: bool, request: Request
-    ) -> None:
+    ) -> Coroutine[Any, Any, None]:
         if form["password"]:
             model.set_password(form["password"])
             form["password"] = model.password

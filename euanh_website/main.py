@@ -4,7 +4,8 @@
 from fastapi import FastAPI
 from sqladmin import Admin, ModelView
 
-from euanh_website.models import BlogPost, BlogPostView, User, UserTokenView, UserView
+from euanh_website.models import (BlogPost, BlogPostView, User, UserTokenView,
+                                  UserView)
 
 from . import defaults
 
