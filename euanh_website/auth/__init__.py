@@ -1,1 +1,1 @@
-from euanh_website.auth.AdminAuth import AdminAuth
+from euanh_website.auth.admin_auth import AdminAuth
