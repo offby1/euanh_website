@@ -1,0 +1,1 @@
+from euanh_website.views.UserModelView import UserModelView

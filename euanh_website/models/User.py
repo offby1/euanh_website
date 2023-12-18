@@ -1,11 +1,11 @@
 import bcrypt
-from sqladmin import ModelView
 from sqlalchemy import Boolean, Column, Integer, String
 from sqlalchemy.orm import relationship
 from wtforms import validators
 from wtforms.fields import PasswordField
 
 from euanh_website.models.Base import CommonBase
+from euanh_website.views import UserModelView
 
 
 class User(CommonBase):
@@ -26,13 +26,15 @@ class User(CommonBase):
         return self.username
 
     def set_password(self, password):
-        self.password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+        self.password = bcrypt.hashpw(
+            password.encode("utf-8"), bcrypt.gensalt()
+        ).decode()
 
     def check_password(self, password):
         return bcrypt.checkpw(password.encode("utf-8"), self.password.encode("utf-8"))
 
 
-class UserView(ModelView, model=User):
+class UserView(UserModelView, model=User):
     column_list = [
         User.id,
         User.username,
@@ -42,22 +44,4 @@ class UserView(ModelView, model=User):
         User.updated_on,
     ]
 
-    form_columns = [
-        User.id,
-        User.username,
-        User.email,
-        User.admin,
-        "password",
-    ]
-
-    form_extra_fields = {"password": PasswordField("Password", [validators.Optional()])}
-
-    def on_model_change(self, form, model, is_created):
-        # Hash the password if it's provided
-        if form.password.data:
-            model.set_password(form.password.data)
-        return super(UserView, self).on_model_change(form, model, is_created)
-
-    column_formatters = {
-        "password": lambda view, context, model, name: "******"  # Mask the password
-    }
+    form_columns = [User.id, User.username, User.email, User.admin, User.password]
