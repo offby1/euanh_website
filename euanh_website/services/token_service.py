@@ -1,6 +1,8 @@
 import secrets
 from datetime import datetime, timezone
 
+import pytz
+
 from euanh_website.defaults import Session
 from euanh_website.models import UserToken
 
@@ -14,7 +16,9 @@ class TokenService:
             return False
         with Session() as session:
             token = session.query(UserToken).filter_by(token=self.token).first()
-            if token is not None and token.expiry > datetime.now(timezone.utc):
+            if token is not None and pytz.UTC.localize(token.expires_at) > datetime.now(
+                timezone.utc
+            ):
                 return True
             elif token is not None:
                 session.delete(token)
