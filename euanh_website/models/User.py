@@ -1,11 +1,13 @@
+from typing import Any, Coroutine
+
 import bcrypt
+from sqladmin import ModelView
 from sqlalchemy import Boolean, Column, Integer, String
 from sqlalchemy.orm import relationship
-from wtforms import validators
-from wtforms.fields import PasswordField
+from starlette.requests import Request
+from wtforms import Form, PasswordField
 
 from euanh_website.models.Base import CommonBase
-from euanh_website.views import UserModelView
 
 
 class User(CommonBase):
@@ -18,6 +20,7 @@ class User(CommonBase):
     admin = Column(Boolean, default=False)
 
     blog_posts = relationship("BlogPost", back_populates="author")
+    tokens = relationship("UserToken", back_populates="user")
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -34,7 +37,7 @@ class User(CommonBase):
         return bcrypt.checkpw(password.encode("utf-8"), self.password.encode("utf-8"))
 
 
-class UserView(UserModelView, model=User):
+class UserView(ModelView, model=User):
     column_list = [
         User.id,
         User.username,
@@ -45,3 +48,18 @@ class UserView(UserModelView, model=User):
     ]
 
     form_columns = [User.id, User.username, User.email, User.admin, User.password]
+
+    async def scaffold_form(self) -> Coroutine[Any, Any, type[Form]]:
+        form_class = await super().scaffold_form()
+        form_class.password = PasswordField("Password")
+        return form_class
+
+    def on_model_change(
+        self, form: Form, model: Any, is_created: bool, request: Request
+    ) -> None:
+        if form["password"]:
+            model.set_password(form["password"])
+            form["password"] = model.password
+        else:
+            form["password"] = model.password
+        return super().on_model_change(form, model, is_created, request)

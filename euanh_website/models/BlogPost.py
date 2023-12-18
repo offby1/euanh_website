@@ -15,6 +15,7 @@ class BlogPost(CommonBase):
     preview = Column(String)
     content = Column(String)
     author_id = Column(Integer, ForeignKey("users.id"))
+
     author = relationship("User", back_populates="blog_posts")
 
     def __repr__(self):

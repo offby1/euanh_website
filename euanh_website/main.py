@@ -4,14 +4,15 @@
 from fastapi import FastAPI
 from sqladmin import Admin, ModelView
 
-from euanh_website.models import BlogPost, BlogPostView, User, UserView
+from euanh_website.models import BlogPost, BlogPostView, User, UserTokenView, UserView
 
-from . import config
+from . import defaults
 
 app = FastAPI()
-admin = Admin(app, config.engine)
+admin = Admin(app, defaults.engine)
 admin.add_view(BlogPostView)
 admin.add_view(UserView)
+admin.add_view(UserTokenView)
 
 
 @app.get("/")
