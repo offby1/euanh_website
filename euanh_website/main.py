@@ -35,5 +35,10 @@ templates = Jinja2Templates(
 async def root(request: Request):
     # Get the index template from the templates folder using jinja2
     return templates.TemplateResponse(
-        "index.jinja", {"request": request, "config": defaults.default_jinja_config}
+        "index.jinja",
+        {
+            "request": request,
+            "config": defaults.default_jinja_config,
+            "posts": [{"title": "Test Post", "preview_text": "This is a test post."}],
+        },
     )

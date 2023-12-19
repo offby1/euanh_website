@@ -1,0 +1,12 @@
+{# blogs.html #}
+
+<!-- blogs.html -->
+<main class="container mx-auto px-6 py-8">
+    <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        {% for post in posts %}
+            {% set title = post.title %}
+            {% set preview_text = post.preview_text %}
+            {% include 'blog_preview.jinja' %}
+        {% endfor %}
+    </div>
+</main>
