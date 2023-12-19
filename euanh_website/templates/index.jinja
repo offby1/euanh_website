@@ -9,7 +9,7 @@
     <!-- Include Tailwind CSS -->
     <link href="{{ url_for('static', path='/css/tailwind.css') }}" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
+<body class="flex flex-col h-screen">
     <!-- Header -->
     {% include 'header.jinja' %}
     <!-- Main Content -->
@@ -17,8 +17,6 @@
         <!-- Content Grid -->
     </main>
     <!-- Footer -->
-    <footer class="bg-white">
-        <!-- Footer Content -->
-    </footer>
+    {% include 'footer.jinja' %}
 </body>
 </html>
