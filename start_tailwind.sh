@@ -1,0 +1,1 @@
+poetry run tailwindcss -i app.css -o .\euanh_website\static\css\tailwind.css --minify --watch
