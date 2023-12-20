@@ -1,7 +1,10 @@
 import os
 
-from fastapi import FastAPI, Request
+import requests
+from fastapi import FastAPI, Form, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.gzip import GZipMiddleware
+from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from sqladmin import Admin
 
@@ -66,6 +69,47 @@ async def contact(request: Request):
             "request": request,
             "config": defaults.default_jinja_config,
             "site_map": defaults.site_mapping,
+            "url": defaults.site_mapping["contact"],
+        },
+    )
+
+
+from fastapi.responses import HTMLResponse
+
+
+@app.post(defaults.site_mapping["contact"])
+async def contact_form_submission(
+    request: Request,
+    name: str = Form(...),
+    email: str = Form(...),
+    message: str = Form(...),
+    recaptcha_response: str = Form(...),
+):
+    # Verify the reCAPTCHA response
+    data = {"secret": defaults.recaptcha_secret_key, "response": recaptcha_response}
+    response = requests.post(
+        "https://www.google.com/recaptcha/api/siteverify", data=data
+    )
+    result = response.json()
+
+    # Check if reCAPTCHA test passed
+    if not result.get("success") or result.get("score") < defaults.is_a_bot_threshold:
+        return templates.TemplateResponse(
+            "contact_success.jinja",
+            {
+                "request": request,
+                "config": defaults.default_jinja_config,
+                "site_map": defaults.site_mapping,
+            },
+        )
+
+    # Return a success message
+    return templates.TemplateResponse(
+        "contact_success.jinja",
+        {
+            "request": request,
+            "config": defaults.default_jinja_config,
+            "site_map": defaults.site_mapping,
         },
     )
 
@@ -124,3 +168,8 @@ async def not_found(request, exc):
         },
         status_code=404,
     )
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(status_code=422, content={"detail": exc.errors()})
