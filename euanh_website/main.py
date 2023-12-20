@@ -112,3 +112,18 @@ async def view_blog_post(request: Request, id: int):
             "site_map": defaults.site_mapping,
         },
     )
+
+
+@app.exception_handler(404)
+async def not_found(request, exc):
+    return templates.TemplateResponse(
+        "404.jinja",
+        {
+            "request": request,
+            "config": defaults.default_jinja_config,
+            "site_map": defaults.site_mapping,
+            "error_message": "Page not found",
+            "redirect_url": defaults.site_mapping["home"],
+        },
+        status_code=404,
+    )
