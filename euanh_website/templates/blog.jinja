@@ -19,7 +19,12 @@
 
     <!-- Main Content -->
     <main class="container mx-auto px-6">
-        
+        <div class="text-center py-20">
+            <div class="w-full md:w-1/2 lg:w-1/3 mx-auto rounded-xl shadow-md bg-white p-6 border-2">
+                <h1>{{ post.title }}</h1>
+                {{ post.content | safe}}
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->

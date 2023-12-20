@@ -1,3 +1,5 @@
+import mistune
+
 from euanh_website import defaults
 from euanh_website.defaults import Session
 from euanh_website.models import BlogPost
@@ -9,9 +11,11 @@ class PreviewBlogPostService:
         return defaults.site_mapping["view_blog_post"].format(id=post_id)
 
     @classmethod
-    def set_urls_for_posts(cls, posts):
+    def format_posts(cls, posts):
         for post in posts:
             post["url"] = cls.get_post_url(post["id"])
+            post["preview"] = mistune.html(post["preview"])
+            post["updated_on"] = post["updated_on"].strftime("%d %B %Y")
 
         return posts
 
@@ -25,7 +29,7 @@ class PreviewBlogPostService:
                 .all()
             )
 
-            return cls.set_urls_for_posts([post.__dict__ for post in posts])
+            return cls.format_posts([post.__dict__ for post in posts])
 
     @classmethod
     def get_latest(cls, limit=6):
@@ -38,7 +42,7 @@ class PreviewBlogPostService:
                 .all()
             )
 
-            return cls.set_urls_for_posts([post.__dict__ for post in posts])
+            return cls.format_posts([post.__dict__ for post in posts])
 
     @classmethod
     def get(cls, id):

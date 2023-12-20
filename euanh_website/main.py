@@ -10,7 +10,7 @@ from sqladmin import Admin
 
 from euanh_website.admin_views import BlogPostView, UserTokenView, UserView
 from euanh_website.auth import AdminAuth
-from euanh_website.services import PreviewBlogPostService
+from euanh_website.services import BlogPostService, PreviewBlogPostService
 
 from . import defaults
 from .defaults import templates
@@ -125,7 +125,7 @@ async def blog(request: Request):
 
 @app.get(defaults.site_mapping["view_blog_post"])
 async def view_blog_post(request: Request, id: int):
-    post = PreviewBlogPostService.get(id)
+    post = BlogPostService.get(id)
 
     if post is None:
         return templates.TemplateResponse(
