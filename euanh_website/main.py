@@ -81,18 +81,34 @@ async def blog(request: Request):
             "request": request,
             "config": defaults.default_jinja_config,
             "site_map": defaults.site_mapping,
+            "posts": PreviewBlogPostService.get_all(),
         },
     )
 
 
 @app.get(defaults.site_mapping["view_blog_post"])
 async def view_blog_post(request: Request, id: int):
+    post = PreviewBlogPostService.get(id)
+
+    if post is None:
+        return templates.TemplateResponse(
+            "404.jinja",
+            {
+                "request": request,
+                "config": defaults.default_jinja_config,
+                "site_map": defaults.site_mapping,
+                "error_message": "Blog post not found",
+                "redirect_url": defaults.site_mapping["blog_posts"],
+            },
+            status_code=404,
+        )
+
     return templates.TemplateResponse(
         "blog.jinja",
         {
             "request": request,
             "config": defaults.default_jinja_config,
-            "post": PreviewBlogPostService.get(id),
+            "post": post,
             "site_map": defaults.site_mapping,
         },
     )

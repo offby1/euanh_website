@@ -6,9 +6,6 @@
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-12">
         {% for post in posts %}
-            {% set title = post.title %}
-            {% set preview = post.preview %}
-            {% set url = post.url %}
             {% include 'blog_preview.jinja' %}
         {% endfor %}
     </div>

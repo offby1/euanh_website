@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
 from euanh_website.models.base import CommonBase
@@ -12,6 +12,7 @@ class BlogPost(CommonBase):
     preview = Column(String)
     content = Column(String)
     author_id = Column(Integer, ForeignKey("users.id"))
+    is_published = Column(Boolean, default=False)
 
     author = relationship("User", back_populates="blog_posts")
 

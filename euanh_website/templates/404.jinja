@@ -1,0 +1,39 @@
+{# 404.html #}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ config.site_name }} : About</title>
+    <!-- Include Tailwind CSS -->
+    <link href="{{ url_for('static', path='/css/tailwind.css') }}" rel="stylesheet">
+</head>
+
+<body class="flex flex-col h-screen">
+    <!-- Header -->
+    {% include 'header.jinja' %}
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-12 py-12 text-center">
+        <div class="text-center py-8 inline-block rounded-xl shadow-md bg-white p-4 border-4 border-white font-riffic">
+            <h1
+                class="text-header_green_hover text-3xl">
+                404 : {{ error_message }}</h1>
+            <p class="text-black text-xl mt-4">Redirecting in 3 seconds...</p>
+        </div>
+    </main>
+
+    <!-- Redirect after 10 seconds -->
+    <script>
+        setTimeout(function() {
+            window.location.href = "{{ redirect_url }}";
+        }, 3000);
+    </script>
+
+    <!-- Footer -->
+    {% include 'footer.jinja' %}
+</body>
+
+</html>

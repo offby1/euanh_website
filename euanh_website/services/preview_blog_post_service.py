@@ -18,7 +18,7 @@ class PreviewBlogPostService:
     @classmethod
     def get_all(cls):
         with Session() as session:
-            posts = session.query(BlogPost).all()
+            posts = session.query(BlogPost).filter(BlogPost.is_published == True).all()
 
             return cls.set_urls_for_posts([post.__dict__ for post in posts])
 
@@ -28,6 +28,7 @@ class PreviewBlogPostService:
             posts = (
                 session.query(BlogPost)
                 .order_by(BlogPost.updated_on.desc())
+                .filter(BlogPost.is_published == True)
                 .limit(limit)
                 .all()
             )
@@ -37,6 +38,13 @@ class PreviewBlogPostService:
     @classmethod
     def get(cls, id):
         with Session() as session:
-            post = session.query(BlogPost).filter(BlogPost.id == id).first()
+            post = (
+                session.query(BlogPost)
+                .filter(BlogPost.is_published == True)
+                .filter(BlogPost.id == id)
+                .first()
+            )
 
+            if post is None:
+                return None
             return post.__dict__
