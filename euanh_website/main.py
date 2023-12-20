@@ -20,8 +20,6 @@ app.mount(
 )
 app.add_middleware(GZipMiddleware)
 
-print(templates.env.__dir__())
-
 admin = Admin(
     app,
     defaults.engine,
