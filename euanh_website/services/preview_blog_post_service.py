@@ -33,3 +33,10 @@ class PreviewBlogPostService:
             )
 
             return cls.set_urls_for_posts([post.__dict__ for post in posts])
+
+    @classmethod
+    def get(cls, id):
+        with Session() as session:
+            post = session.query(BlogPost).filter(BlogPost.id == id).first()
+
+            return post.__dict__

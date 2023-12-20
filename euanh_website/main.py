@@ -83,3 +83,16 @@ async def blog(request: Request):
             "site_map": defaults.site_mapping,
         },
     )
+
+
+@app.get(defaults.site_mapping["view_blog_post"])
+async def view_blog_post(request: Request, id: int):
+    return templates.TemplateResponse(
+        "blog.jinja",
+        {
+            "request": request,
+            "config": defaults.default_jinja_config,
+            "post": PreviewBlogPostService.get(id),
+            "site_map": defaults.site_mapping,
+        },
+    )
