@@ -2,7 +2,7 @@ from fastapi import Request
 from fastapi.responses import RedirectResponse
 from sqladmin import ModelView, action
 
-from euanh_website.defaults import Session, templates
+from euanh_website.defaults import Session
 from euanh_website.models import BlogPost
 
 

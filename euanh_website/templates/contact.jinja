@@ -33,7 +33,8 @@
                 <p class="text-gray-600 text-lg font-riffic mb-8">
                     If you have any suggestions or questions, please feel free to contact me.
                 </p>
-                <form id="contact-form" method="post" hx-post="{{ url }}" hx-target="#response-output" hx-trigger="submit">
+                <form id="contact-form" method="post" hx-post="{{ url }}" hx-target="#response-output"
+                    hx-trigger="submit">
                     <div class="mb-4">
                         <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
                         <input name="name" type="text" required placeholder="Your name...."
@@ -76,6 +77,32 @@
 
     <script>
         function onSubmit(token) {
+            var email = document.querySelector('input[name="email"]').value;
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex pattern
+
+            var warningDiv = document.getElementById('warning-message');
+            if (!emailPattern.test(email)) {
+                event.preventDefault();
+                warningDiv.innerHTML = 'Please enter a valid email address.';
+                warningDiv.classList.remove('hidden');
+                return;
+            } else {
+                warningDiv.classList.add('hidden');
+            }
+
+            var name = document.querySelector('input[name="name"]').value;
+            var message = document.querySelector('textarea[name="message"]').value;
+
+            var warningDiv = document.getElementById('warning-message');
+            if (!name || !message) {
+                event.preventDefault();
+                warningDiv.innerHTML = 'Please fill in all required fields.';
+                warningDiv.classList.remove('hidden');
+                return;
+            } else {
+                warningDiv.classList.add('hidden');
+            }
+
             var tokenInput = document.createElement('input');
             tokenInput.type = 'hidden';
             tokenInput.name = 'recaptcha_response';
@@ -86,20 +113,9 @@
             document.getElementById('contact-form').submit();
         }
 
-        document.getElementById('contact-form').addEventListener('submit', function (event) {
-            var name = document.querySelector('input[name="name"]').value;
-            var email = document.querySelector('input[name="email"]').value;
-            var message = document.querySelector('textarea[name="message"]').value;
-
-            var warningDiv = document.getElementById('warning-message');
-            if (!name || !email || !message) {
-                event.preventDefault();
-                warningDiv.innerHTML = 'Please fill in all required fields.';
-                warningDiv.classList.remove('hidden');
-            } else {
-                warningDiv.classList.add('hidden');
-            }
-        });
+        {# document.getElementById('contact-form').addEventListener('submit', function (event) {
+            
+        }); #}
 
     </script>
 

@@ -48,3 +48,9 @@ body {
   scrollbar-color: #73a499 #d1d5db; /* Thumb and track color */
 }
 
+/* styles.css */
+.center-prose {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; /* if you also want to center the text */
+}

@@ -1,3 +1,4 @@
 from euanh_website.admin_views.blog_post_view import BlogPostView
+from euanh_website.admin_views.contact_submission_view import ContactSubmissionView
 from euanh_website.admin_views.user_token_view import UserTokenView
 from euanh_website.admin_views.user_view import UserView

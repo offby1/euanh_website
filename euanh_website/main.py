@@ -8,9 +8,18 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from sqladmin import Admin
 
-from euanh_website.admin_views import BlogPostView, UserTokenView, UserView
+from euanh_website.admin_views import (
+    BlogPostView,
+    ContactSubmissionView,
+    UserTokenView,
+    UserView,
+)
 from euanh_website.auth import AdminAuth
-from euanh_website.services import BlogPostService, PreviewBlogPostService
+from euanh_website.services import (
+    BlogPostService,
+    ContactFormService,
+    PreviewBlogPostService,
+)
 
 from . import defaults
 from .defaults import templates
@@ -33,6 +42,7 @@ admin = Admin(
 admin.add_view(BlogPostView)
 admin.add_view(UserView)
 admin.add_view(UserTokenView)
+admin.add_view(ContactSubmissionView)
 
 
 @app.get(defaults.site_mapping["home"])
@@ -90,6 +100,18 @@ async def contact_form_submission(
 
     # Check if reCAPTCHA test passed
     if not result.get("success") or result.get("score") < defaults.is_a_bot_threshold:
+        return templates.TemplateResponse(
+            "contact_success.jinja",
+            {
+                "request": request,
+                "config": defaults.default_jinja_config,
+                "site_map": defaults.site_mapping,
+            },
+        )
+
+    try:
+        ContactFormService.submit(name, email, message)
+    except Exception:
         return templates.TemplateResponse(
             "contact_success.jinja",
             {

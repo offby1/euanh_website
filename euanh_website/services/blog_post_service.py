@@ -10,6 +10,7 @@ class BlogPostService:
         post["content"] = mistune.html(post["content"])
         post["updated_on"] = post["updated_on"].strftime("%d %B %Y")
 
+        print(post["content"])
         return post
 
     @classmethod
