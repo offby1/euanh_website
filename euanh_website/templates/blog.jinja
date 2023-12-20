@@ -25,9 +25,13 @@
             <div class="w-full lg:w-2/3 mx-auto rounded-xl shadow-md bg-white p-6 border-2">
                 <h1 class="text-header_green_hover text-4xl font-riffic mb-4">{{ post.title }}</h1>
                 <div class="text-center">
-                <div class="prose center-prose">
-                    {{ post.content | safe }}
-                </div>
+                    <div class="text-sm py-2">
+                        <p class="mt-2 text-gray-600">Last updated: {{ post.updated_on }}</p>
+                    </div>
+
+                    <div class="prose center-prose">
+                        {{ post.content | safe }}
+                    </div>
                 </div>
             </div>
         </div>
