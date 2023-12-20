@@ -1,11 +1,14 @@
 {# blogs.html #}
 
-<!-- blogs.html -->
 <main class="container mx-auto px-6 py-8">
-    <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div class="text-center py-8">
+        <h3 class="text-header_green_hover text-3xl font-riffic inline-block rounded-xl shadow-md bg-white p-2 border-2 border-white"> {{ blogs_title }}</h3>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-12">
         {% for post in posts %}
             {% set title = post.title %}
             {% set preview = post.preview %}
+            {% set url = post.url %}
             {% include 'blog_preview.jinja' %}
         {% endfor %}
     </div>

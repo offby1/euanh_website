@@ -5,17 +5,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Home</title>
+    <title>{{ config.site_name}} : Home</title>
     <!-- Include Tailwind CSS -->
     <link href="{{ url_for('static', path='/css/tailwind.css') }}" rel="stylesheet">
 </head>
 <body class="flex flex-col h-screen">
     <!-- Header -->
     {% include 'header.jinja' %}
+
     <!-- Main Content -->
     <main class="container mx-auto px-6">
+        <!-- Blog Posts -->
+        {% set blogs_title = 'Latest Blog Posts'%}
         {% include 'blogs.jinja' %}
+
+        <!-- View More Button -->
+        <div class="text-center">
+            <a href="{{ site_map.blog_posts }}">
+                <button class="bg-header_green hover:bg-header_green_hover text-white font-bold py-2 px-4 rounded">
+                    View More Blog Posts
+                </button>
+            </a>
+        </div>
     </main>
+
     <!-- Footer -->
     {% include 'footer.jinja' %}
 </body>

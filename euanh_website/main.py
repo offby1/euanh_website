@@ -21,7 +21,10 @@ app.mount(
 app.add_middleware(GZipMiddleware)
 
 admin = Admin(
-    app, defaults.engine, authentication_backend=AdminAuth(os.environ["ADMIN_SECRET"])
+    app,
+    defaults.engine,
+    authentication_backend=AdminAuth(os.environ["ADMIN_SECRET"]),
+    base_url=defaults.site_mapping["admin"],
 )
 admin.add_view(BlogPostView)
 admin.add_view(UserView)
@@ -32,7 +35,7 @@ templates = Jinja2Templates(
 )
 
 
-@app.get("/")
+@app.get(defaults.site_mapping["home"])
 async def root(request: Request):
     # Get the index template from the templates folder using jinja2
     return templates.TemplateResponse(
@@ -40,6 +43,31 @@ async def root(request: Request):
         {
             "request": request,
             "config": defaults.default_jinja_config,
-            "posts": PreviewBlogPostService.get_all(),
+            "posts": PreviewBlogPostService.get_latest(limit=6),
+            "site_map": defaults.site_mapping,
+        },
+    )
+
+
+@app.get(defaults.site_mapping["about"])
+async def about(request: Request):
+    return templates.TemplateResponse(
+        "about.jinja",
+        {
+            "request": request,
+            "config": defaults.default_jinja_config,
+            "site_map": defaults.site_mapping,
+        },
+    )
+
+
+@app.get(defaults.site_mapping["contact"])
+async def contact(request: Request):
+    return templates.TemplateResponse(
+        "contact.jinja",
+        {
+            "request": request,
+            "config": defaults.default_jinja_config,
+            "site_map": defaults.site_mapping,
         },
     )

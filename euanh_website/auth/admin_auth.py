@@ -2,6 +2,7 @@ from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request
 from starlette.responses import RedirectResponse, Response
 
+from euanh_website import defaults
 from euanh_website.defaults import Session
 from euanh_website.models import User
 from euanh_website.services import TokenService
@@ -30,9 +31,9 @@ class AdminAuth(AuthenticationBackend):
     async def authenticate(self, request: Request) -> Response | bool:
         token = request.session.get("token")
         if token is None:
-            return RedirectResponse("/admin/login")
+            return RedirectResponse(defaults.site_mapping["admin"] + "/login")
 
         if TokenService(token).verify():
             return True
         else:
-            return RedirectResponse("/admin/login")
+            return RedirectResponse(defaults.site_mapping["admin"] + "/login")
