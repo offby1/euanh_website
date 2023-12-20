@@ -18,6 +18,7 @@ default_jinja_config = {
     "site_name": "Euan's Blog",
     "current_year": datetime.now().year,
     "recaptcha_site_key": os.environ["RECAPTCHA_SITE_KEY"],
+    "recaptcha_secret_key": os.environ["RECAPTCHA_SECRET_KEY"],
 }
 
 site_mapping = {
