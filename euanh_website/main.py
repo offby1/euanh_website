@@ -71,3 +71,15 @@ async def contact(request: Request):
             "site_map": defaults.site_mapping,
         },
     )
+
+
+@app.get(defaults.site_mapping["blog_posts"])
+async def blog(request: Request):
+    return templates.TemplateResponse(
+        "blog_posts.jinja",
+        {
+            "request": request,
+            "config": defaults.default_jinja_config,
+            "site_map": defaults.site_mapping,
+        },
+    )
