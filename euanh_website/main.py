@@ -36,8 +36,7 @@ admin.add_view(UserTokenView)
 
 
 @app.get(defaults.site_mapping["home"])
-async def root(request: Request):
-    # Get the index template from the templates folder using jinja2
+async def home(request: Request):
     return templates.TemplateResponse(
         "index.jinja",
         {
@@ -72,9 +71,6 @@ async def contact(request: Request):
             "url": defaults.site_mapping["contact"],
         },
     )
-
-
-from fastapi.responses import HTMLResponse
 
 
 @app.post(defaults.site_mapping["contact"])
