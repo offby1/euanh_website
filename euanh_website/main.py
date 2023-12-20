@@ -7,6 +7,7 @@ from fastapi.templating import Jinja2Templates
 from sqladmin import Admin
 
 from euanh_website.auth import AdminAuth
+from euanh_website.services import PreviewBlogPostService
 from euanh_website.views import BlogPostView, UserTokenView, UserView
 
 from . import defaults
@@ -39,6 +40,6 @@ async def root(request: Request):
         {
             "request": request,
             "config": defaults.default_jinja_config,
-            "posts": [{"title": "Test Post", "preview_text": "This is a test post."}],
+            "posts": PreviewBlogPostService.get_all(),
         },
     )

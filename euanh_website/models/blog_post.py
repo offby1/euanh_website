@@ -20,3 +20,12 @@ class BlogPost(CommonBase):
 
     def __str__(self):
         return self.title
+
+    def get_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "preview": self.preview,
+            "content": self.content,
+            "author_id": self.author_id,
+        }
