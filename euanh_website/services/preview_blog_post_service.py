@@ -18,7 +18,12 @@ class PreviewBlogPostService:
     @classmethod
     def get_all(cls):
         with Session() as session:
-            posts = session.query(BlogPost).filter(BlogPost.is_published == True).all()
+            posts = (
+                session.query(BlogPost)
+                .order_by(BlogPost.updated_on.desc())
+                .filter(BlogPost.is_published == True)
+                .all()
+            )
 
             return cls.set_urls_for_posts([post.__dict__ for post in posts])
 

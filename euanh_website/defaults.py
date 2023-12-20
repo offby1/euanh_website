@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 
+from fastapi.templating import Jinja2Templates
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -26,3 +27,7 @@ site_mapping = {
     "home": "/",
     "admin": "/the_most_secret_admin_page_in_the_world",
 }
+
+templates = Jinja2Templates(
+    directory=os.path.join(os.path.dirname(__file__), "templates")
+)

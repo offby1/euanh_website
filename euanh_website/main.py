@@ -3,7 +3,6 @@ import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 from sqladmin import Admin
 
 from euanh_website.admin_views import BlogPostView, UserTokenView, UserView
@@ -11,6 +10,7 @@ from euanh_website.auth import AdminAuth
 from euanh_website.services import PreviewBlogPostService
 
 from . import defaults
+from .defaults import templates
 
 app = FastAPI()
 app.mount(
@@ -20,19 +20,18 @@ app.mount(
 )
 app.add_middleware(GZipMiddleware)
 
+print(templates.env.__dir__())
+
 admin = Admin(
     app,
     defaults.engine,
     authentication_backend=AdminAuth(os.environ["ADMIN_SECRET"]),
     base_url=defaults.site_mapping["admin"],
+    templates_dir=templates.env.loader.searchpath,
 )
 admin.add_view(BlogPostView)
 admin.add_view(UserView)
 admin.add_view(UserTokenView)
-
-templates = Jinja2Templates(
-    directory=os.path.join(os.path.dirname(__file__), "templates")
-)
 
 
 @app.get(defaults.site_mapping["home"])
