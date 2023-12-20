@@ -17,6 +17,7 @@ Session = scoped_session(session_factory)
 default_jinja_config = {
     "site_name": "Euan's Blog",
     "current_year": datetime.now().year,
+    "recaptcha_site_key": os.environ["RECAPTCHA_SITE_KEY"],
 }
 
 site_mapping = {
