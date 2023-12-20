@@ -14,12 +14,37 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
+    background-position: center center;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: auto;
+    overflow-y: scroll;
 }
 
 
 main{
   flex-grow: 1;
 }
+
+/* This styles the scrollbar track */
+body::-webkit-scrollbar-track {
+  background-color: #d1d5db; /* A more neutral grey color for the track */
+}
+
+/* This styles the scrollbar thumb */
+body::-webkit-scrollbar-thumb {
+  background-color: #73a499; /* header_green_hover color for the thumb */
+  border-radius: 20px; /* More rounder corners for the thumb */
+}
+
+/* This styles the scrollbar itself */
+body::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+body {
+  scrollbar-width: thin; /* Can be "auto", "thin", or "none" */
+  scrollbar-color: #73a499 #d1d5db; /* Thumb and track color */
+}
+
