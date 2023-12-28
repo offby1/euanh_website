@@ -5,8 +5,8 @@ export ADMIN_SECRET='Hi'
 export DATABASE_URL='sqlite:///euanh_website.db'
 export RECAPTCHA_SITE_KEY='example'
 export RECAPTCHA_SECRET_KEY='example'
-export GMAIL_PASSWORD = "example"
-export GMAIL_USERNAME = "example"
+export GMAIL_PASSWORD='example'
+export GMAIL_USERNAME='example'
 
 # Run the application with Poetry
 poetry run tailwindcss -i app.css -o .\euanh_website\static\css\tailwind.css --minify
