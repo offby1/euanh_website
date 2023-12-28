@@ -22,6 +22,7 @@ class BlogPostView(ModelView, model=BlogPost):
     column_default_sort = ("created_on", True)
 
     edit_template = "blog_post_admin_edit.jinja"
+    create_template = "blog_post_admin_create.jinja"
 
     @action(
         name="publish_articles",
