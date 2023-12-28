@@ -35,3 +35,6 @@ site_mapping = {
 templates = Jinja2Templates(
     directory=os.path.join(os.path.dirname(__file__), "templates")
 )
+
+gmail_username = os.environ["GMAIL_USERNAME"]
+gmail_password = os.environ["GMAIL_PASSWORD"]

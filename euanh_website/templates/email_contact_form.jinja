@@ -1,0 +1,61 @@
+{# email_contact_form.html #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You for Contacting Us</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f5f4;
+            color: #333333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            border: 1px solid #dce7d5;
+            padding: 20px;
+            max-width: 600px;
+            margin: 40px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #e4e8e5;
+            padding: 10px 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        .footer {
+            background-color: #e4e8e5;
+            padding: 10px 20px;
+            text-align: center;
+            border-radius: 0 0 8px 8px;
+            font-size: 0.8em;
+        }
+        h1 {
+            color: #3e7b47;
+        }
+        p {
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Thank You for Your Message</h1>
+        </div>
+        <p>Dear {{ name }},</p>
+        <p>Thank you for reaching out to us! Your message is important, and we're excited to read what you have to say. We'll be in touch soon!</p>
+        <p>In the meantime, feel free to explore our blog for the latest updates and insights. We appreciate your interest and are looking forward to being in touch.</p>
+        <p>Warm regards,</p>
+        <p><strong>{{ site_name }}</strong></p>
+        <div class="footer">
+            <p>This email was sent from {{ site_name }}. If you received this email by mistake, please ignore it.</p>
+        </div>
+    </div>
+</body>
+</html>

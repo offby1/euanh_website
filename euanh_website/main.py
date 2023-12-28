@@ -1,7 +1,7 @@
 import os
 
 import requests
-from fastapi import FastAPI, Form, Request
+from fastapi import BackgroundTasks, FastAPI, Form, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse
@@ -18,6 +18,7 @@ from euanh_website.auth import AdminAuth
 from euanh_website.services import (
     BlogPostService,
     ContactFormService,
+    EmailService,
     PreviewBlogPostService,
 )
 
@@ -85,6 +86,7 @@ async def contact(request: Request):
 
 @app.post(defaults.site_mapping["contact"])
 async def contact_form_submission(
+    background_tasks: BackgroundTasks,
     request: Request,
     name: str = Form(...),
     email: str = Form(...),
@@ -111,7 +113,21 @@ async def contact_form_submission(
 
     try:
         ContactFormService.submit(name, email, message)
-    except Exception:
+        # Create an instance of your EmailService
+        email_service = EmailService()
+
+        # Run the email sending in a background thread
+        # Note that we're passing the function and its arguments separately
+        background_tasks.add_task(
+            email_service.send_template_email,
+            "Contact form submission",
+            "email_contact_form.jinja",
+            email,
+            name=name,
+            site_name=defaults.default_jinja_config["site_name"],
+            alt="Your contact form submission was successful. Thank you for getting in touch! We will get back to you as soon as possible.",
+        )
+    except Exception as e:
         return templates.TemplateResponse(
             "contact_success.jinja",
             {
